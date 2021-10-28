@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:secured_chat_app/constants.dart';
+import 'package:secured_chat_app/screens/welcome_screen.dart';
 import 'package:signalr_client/hub_connection.dart';
 import 'package:signalr_client/hub_connection_builder.dart';
 
@@ -15,9 +17,11 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Mesajlaşma Uygulaması',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primaryColor: primaryColor,
+        scaffoldBackgroundColor: Colors.white,
       ),
-      home: const MyHomePage(title: 'Mesajlaşma Uygulaması'),
+      // home: const MyHomePage(title: 'Mesajlaşma Uygulaması'),
+      home: const WelcomeScreen(),
     );
   }
 }
@@ -70,6 +74,7 @@ class _MyHomePageState extends State<MyHomePage> {
             GestureDetector(
               onTap: () async {
                 DateTime now = DateTime.now();
+                // ignore: avoid_print
                 print(now.toString() + hubConnection.state.toString());
                 if (hubConnection.state == HubConnectionState.Connected) {
                   await hubConnection.invoke("SendMessage", args: <Object>[
