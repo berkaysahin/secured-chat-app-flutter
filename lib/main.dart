@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:secured_chat_app/constants.dart';
-import 'package:secured_chat_app/screens/welcome_screen.dart';
+import 'package:secured_chat_app/screens/welcome/welcome_screen.dart';
 import 'package:signalr_client/hub_connection.dart';
 import 'package:signalr_client/hub_connection_builder.dart';
 

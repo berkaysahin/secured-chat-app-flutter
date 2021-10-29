@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:secured_chat_app/components/rounded_button.dart';
 import 'package:secured_chat_app/constants.dart';
-import 'package:secured_chat_app/screens/components/background.dart';
 import 'package:secured_chat_app/screens/login/login_screen.dart';
+import 'package:secured_chat_app/screens/welcome/components/background.dart';
 
 class Body extends StatelessWidget {
   const Body({Key key}) : super(key: key);
