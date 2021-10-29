@@ -5,6 +5,7 @@ import 'package:secured_chat_app/components/rounded_button.dart';
 import 'package:secured_chat_app/components/rounded_input_field.dart';
 import 'package:secured_chat_app/components/rounded_password_field.dart';
 import 'package:secured_chat_app/screens/login/components/background.dart';
+import 'package:secured_chat_app/screens/register/register_screen.dart';
 
 class Body extends StatelessWidget {
   const Body({
@@ -48,7 +49,16 @@ class Body extends StatelessWidget {
               height: size.height * 0.03,
             ),
             AlreadyHaveAnAccountCheck(
-              press: () {},
+              press: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) {
+                      return const RegisterScreen();
+                    },
+                  ),
+                );
+              },
             ),
           ],
         ),
