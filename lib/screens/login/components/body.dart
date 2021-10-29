@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:secured_chat_app/components/already_have_an_account_check.dart';
+import 'package:secured_chat_app/components/bottom_navigation.dart';
 import 'package:secured_chat_app/components/rounded_button.dart';
 import 'package:secured_chat_app/components/rounded_input_field.dart';
 import 'package:secured_chat_app/components/rounded_password_field.dart';
 import 'package:secured_chat_app/screens/login/components/background.dart';
+import 'package:secured_chat_app/screens/message_box/message_box_screen.dart';
 import 'package:secured_chat_app/screens/register/register_screen.dart';
 
 class Body extends StatelessWidget {
@@ -43,7 +45,16 @@ class Body extends StatelessWidget {
             ),
             RoundedButton(
               text: "Giriş Yap",
-              press: () {},
+              press: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) {
+                      return const BottomNavigation();
+                    },
+                  ),
+                );
+              },
             ),
             SizedBox(
               height: size.height * 0.03,

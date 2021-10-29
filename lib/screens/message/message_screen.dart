@@ -165,7 +165,7 @@ class _ChatScreenState extends State<ChatScreen> {
           const Expanded(
             child: TextField(
               decoration: InputDecoration.collapsed(
-                hintText: 'Send a message..',
+                hintText: 'Mesaj gönder..',
               ),
               textCapitalization: TextCapitalization.sentences,
             ),
@@ -202,14 +202,14 @@ class _ChatScreenState extends State<ChatScreen> {
               const TextSpan(text: '\n'),
               widget.user.isOnline
                   ? const TextSpan(
-                      text: 'Online',
+                      text: 'Çevrimiçi',
                       style: TextStyle(
                         fontSize: 11,
                         fontWeight: FontWeight.w400,
                       ),
                     )
                   : const TextSpan(
-                      text: 'Offline',
+                      text: 'Çevrimdışı',
                       style: TextStyle(
                         fontSize: 11,
                         fontWeight: FontWeight.w400,

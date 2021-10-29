@@ -4,12 +4,16 @@ import 'package:secured_chat_app/screens/welcome/welcome_screen.dart';
 import 'package:signalr_client/hub_connection.dart';
 import 'package:signalr_client/hub_connection_builder.dart';
 
+import 'components/bottom_navigation.dart';
+
 void main() {
   runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
   const MyApp({Key key}) : super(key: key);
+
+  final bool isAuthenticated = false;
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +25,7 @@ class MyApp extends StatelessWidget {
         scaffoldBackgroundColor: Colors.white,
       ),
       // home: const MyHomePage(title: 'Mesajlaşma Uygulaması'),
-      home: const WelcomeScreen(),
+      home: isAuthenticated ? const BottomNavigation() : const WelcomeScreen(),
     );
   }
 }

@@ -11,9 +11,6 @@ class Body extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      bottomNavigationBar: const BottomNavigation(
-        selectedIndex: 1,
-      ),
       backgroundColor: Colors.white,
       body: ListView.builder(
         itemCount: chats.length,
