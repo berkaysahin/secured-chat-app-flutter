@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:secured_chat_app/components/bottom_navigation.dart';
 import 'package:secured_chat_app/models/message_model.dart';
 import 'package:secured_chat_app/screens/message/message_screen.dart';
 

@@ -6,7 +6,6 @@ import 'package:secured_chat_app/components/rounded_button.dart';
 import 'package:secured_chat_app/components/rounded_input_field.dart';
 import 'package:secured_chat_app/components/rounded_password_field.dart';
 import 'package:secured_chat_app/screens/login/components/background.dart';
-import 'package:secured_chat_app/screens/message_box/message_box_screen.dart';
 import 'package:secured_chat_app/screens/register/register_screen.dart';
 
 class Body extends StatelessWidget {
