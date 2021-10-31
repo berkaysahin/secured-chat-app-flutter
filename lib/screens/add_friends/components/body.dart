@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:secured_chat_app/components/rounded_button.dart';
 import 'package:secured_chat_app/models/friends_model.dart';
 import 'package:secured_chat_app/screens/add_friends/components/friend_card.dart';
 import 'package:secured_chat_app/screens/add_friends/components/friend_request_card.dart';
@@ -17,6 +18,10 @@ class Body extends StatelessWidget {
         child: SingleChildScrollView(
           child: Column(
             children: [
+              RoundedButton(
+                text: "+ Yeni Arkadaş Ekle",
+                press: () {},
+              ),
               ListView.builder(
                 physics: const NeverScrollableScrollPhysics(),
                 shrinkWrap: true,
