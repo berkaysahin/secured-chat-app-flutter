@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:secured_chat_app/constants.dart';
 import 'package:secured_chat_app/screens/welcome/welcome_screen.dart';
 import 'package:signalr_client/hub_connection.dart';
@@ -6,7 +8,8 @@ import 'package:signalr_client/hub_connection_builder.dart';
 
 import 'components/bottom_navigation.dart';
 
-void main() {
+void main() async {
+  await GetStorage.init();
   runApp(const MyApp());
 }
 
@@ -17,7 +20,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Mesajlaşma Uygulaması',
       theme: ThemeData(

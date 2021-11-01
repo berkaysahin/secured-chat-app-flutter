@@ -1,17 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:secured_chat_app/components/already_have_an_account_check.dart';
-import 'package:secured_chat_app/components/bottom_navigation.dart';
 import 'package:secured_chat_app/components/rounded_button.dart';
 import 'package:secured_chat_app/components/rounded_input_field.dart';
 import 'package:secured_chat_app/components/rounded_password_field.dart';
 import 'package:secured_chat_app/screens/login/components/background.dart';
+import 'package:secured_chat_app/screens/login/loginController.dart';
 import 'package:secured_chat_app/screens/register/register_screen.dart';
+import 'package:get/get.dart';
+
+import '../loginController.dart';
+import '../loginController.dart';
 
 class Body extends StatelessWidget {
-  const Body({
+  Body({
     Key key,
   }) : super(key: key);
+  LoginController loginController = Get.find();
 
   @override
   Widget build(BuildContext context) {
@@ -36,24 +41,23 @@ class Body extends StatelessWidget {
               height: size.height * 0.03,
             ),
             RoundedInputField(
+              textEditingController: loginController.emailController,
               hintText: "E-Mail",
               onChanged: (value) {},
             ),
             RoundedPasswordField(
+              textEditingController: loginController.passwordController,
               onChanged: (value) {},
             ),
-            RoundedButton(
-              text: "Giriş Yap",
-              press: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) {
-                      return const BottomNavigation();
-                    },
-                  ),
-                );
-              },
+            Obx(
+              () => RoundedButton(
+                text: loginController.loginLoading.value
+                    ? "Giriş Yapılıyor"
+                    : "Giriş Yap",
+                press: () {
+                  loginController.login();
+                },
+              ),
             ),
             SizedBox(
               height: size.height * 0.03,

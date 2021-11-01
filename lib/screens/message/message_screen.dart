@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:secured_chat_app/constants.dart';
 import 'package:secured_chat_app/models/message_model.dart';
 import 'package:secured_chat_app/models/user_model.dart';
 
 class ChatScreen extends StatefulWidget {
   final User user;
 
-  ChatScreen({this.user});
+  const ChatScreen({
+    Key key,
+    this.user,
+  }) : super(key: key);
 
   @override
   _ChatScreenState createState() => _ChatScreenState();
@@ -25,7 +29,7 @@ class _ChatScreenState extends State<ChatScreen> {
               padding: const EdgeInsets.all(10),
               margin: const EdgeInsets.symmetric(vertical: 10),
               decoration: BoxDecoration(
-                color: Theme.of(context).primaryColor,
+                color: primaryColor,
                 borderRadius: BorderRadius.circular(15),
                 boxShadow: [
                   BoxShadow(
@@ -156,12 +160,6 @@ class _ChatScreenState extends State<ChatScreen> {
       color: Colors.white,
       child: Row(
         children: <Widget>[
-          IconButton(
-            icon: const Icon(Icons.photo),
-            iconSize: 25,
-            color: Theme.of(context).primaryColor,
-            onPressed: () {},
-          ),
           const Expanded(
             child: TextField(
               decoration: InputDecoration.collapsed(

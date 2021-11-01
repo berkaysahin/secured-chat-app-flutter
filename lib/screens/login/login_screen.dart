@@ -1,12 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:secured_chat_app/screens/login/components/body.dart';
 
+import 'loginController.dart';
+
 class LoginScreen extends StatelessWidget {
-  const LoginScreen({Key key}) : super(key: key);
+  LoginScreen({
+    Key key,
+  }) : super(key: key);
+  LoginController loginController = Get.put(LoginController());
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
+    // loginController.stringvar.value;
+    return Scaffold(
       body: Body(),
     );
   }

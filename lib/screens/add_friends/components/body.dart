@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:secured_chat_app/components/rounded_button.dart';
 import 'package:secured_chat_app/models/friends_model.dart';
 import 'package:secured_chat_app/screens/add_friends/components/friend_card.dart';
@@ -20,7 +21,9 @@ class Body extends StatelessWidget {
             children: [
               RoundedButton(
                 text: "+ Yeni Arkadaş Ekle",
-                press: () {},
+                press: () {
+                  Get.snackbar("title", "message");
+                },
               ),
               ListView.builder(
                 physics: const NeverScrollableScrollPhysics(),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class FriendRequestCard extends StatelessWidget {
   final String name;
@@ -19,18 +20,12 @@ class FriendRequestCard extends StatelessWidget {
             children: [
               IconButton(
                   onPressed: () {
-                    Scaffold.of(context)
-                        // ignore: deprecated_member_use
-                        .showSnackBar(
-                            const SnackBar(content: Text("Arkadaş eklendi.")));
+                    Get.snackbar("Başarılı", "Arkadaş eklendi.");
                   },
                   icon: const Icon(Icons.check)),
               IconButton(
                   onPressed: () {
-                    Scaffold.of(context)
-                        // ignore: deprecated_member_use
-                        .showSnackBar(
-                            const SnackBar(content: Text("İstek reddedildi.")));
+                    Get.snackbar("Başarılı", "Arkadaş isteği reddedildi.");
                   },
                   icon: const Icon(Icons.clear)),
             ],
