@@ -9,9 +9,6 @@ import 'package:secured_chat_app/screens/login/loginController.dart';
 import 'package:secured_chat_app/screens/register/register_screen.dart';
 import 'package:get/get.dart';
 
-import '../loginController.dart';
-import '../loginController.dart';
-
 class Body extends StatelessWidget {
   Body({
     Key key,
@@ -68,7 +65,7 @@ class Body extends StatelessWidget {
                   context,
                   MaterialPageRoute(
                     builder: (context) {
-                      return const RegisterScreen();
+                      return RegisterScreen();
                     },
                   ),
                 );

@@ -1,16 +1,22 @@
+// ignore_for_file: must_be_immutable
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:get/get.dart';
 import 'package:secured_chat_app/components/already_have_an_account_check.dart';
 import 'package:secured_chat_app/components/rounded_button.dart';
 import 'package:secured_chat_app/components/rounded_input_field.dart';
 import 'package:secured_chat_app/components/rounded_password_field.dart';
 import 'package:secured_chat_app/screens/login/login_screen.dart';
 import 'package:secured_chat_app/screens/register/components/background.dart';
+import 'package:secured_chat_app/screens/register/register_controller.dart';
 
 class Body extends StatelessWidget {
-  const Body({
+  Body({
     Key key,
   }) : super(key: key);
+
+  RegisterController registerController = Get.find();
 
   @override
   Widget build(BuildContext context) {
@@ -30,15 +36,28 @@ class Body extends StatelessWidget {
               height: size.height * 0.35,
             ),
             RoundedInputField(
+              textEditingController: registerController.nicknameController,
+              hintText: "Kullanıcı Adı",
+              onChanged: (value) {},
+            ),
+            RoundedInputField(
+              textEditingController: registerController.emailController,
               hintText: "E-Mail",
               onChanged: (value) {},
             ),
             RoundedPasswordField(
+              textEditingController: registerController.passwordController,
               onChanged: (value) {},
             ),
-            RoundedButton(
-              text: "Kayıt Ol",
-              press: () {},
+            Obx(
+              () => RoundedButton(
+                text: registerController.registerLoading.value
+                    ? "Kayıt Yapılıyor"
+                    : "Kayıt Ol",
+                press: () {
+                  registerController.register();
+                },
+              ),
             ),
             SizedBox(height: size.height * 0.03),
             AlreadyHaveAnAccountCheck(

@@ -13,9 +13,25 @@ class Fetch {
       "email": email,
       "password": password,
     };
-    var jsonBody = JsonEncoder().convert(body);
+    var jsonBody = const JsonEncoder().convert(body);
     var response = await RestConnector(
       domain + urlLogin,
+      getJwtToken(),
+      requestType: "POST",
+      data: jsonBody,
+    ).getData();
+    return response;
+  }
+
+  register(String nickname, String email, String password) async {
+    Map body = {
+      "nickname": nickname,
+      "email": email,
+      "password": password,
+    };
+    var jsonBody = const JsonEncoder().convert(body);
+    var response = await RestConnector(
+      domain + urlRegister,
       getJwtToken(),
       requestType: "POST",
       data: jsonBody,
