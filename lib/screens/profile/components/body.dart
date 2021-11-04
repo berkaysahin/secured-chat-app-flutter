@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:secured_chat_app/components/rounded_button.dart';
 import 'package:secured_chat_app/components/rounded_input_field.dart';
 import 'package:secured_chat_app/screens/profile/components/profile_pic.dart';
@@ -34,6 +35,7 @@ class Body extends StatelessWidget {
                 context,
                 MaterialPageRoute(
                   builder: (context) {
+                    GetStorage().write('jwtToken', "");
                     return const WelcomeScreen();
                   },
                 ),

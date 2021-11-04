@@ -16,7 +16,7 @@ class LoginController extends GetxController {
     loginLoading.value = true;
     var result = await f.login(emailController.text, passwordController.text);
     if (result["success"]) {
-      GetStorage().write("", result["data"]["jwtToken"]);
+      GetStorage().write("jwtToken", result["data"]["jwtToken"]);
       Get.to(const BottomNavigation());
     } else {
       Get.snackbar("Hata", result["error"]);
