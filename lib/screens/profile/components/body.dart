@@ -36,6 +36,7 @@ class Body extends StatelessWidget {
                 MaterialPageRoute(
                   builder: (context) {
                     GetStorage().write('jwtToken', "");
+                    GetStorage().write("id", "");
                     return const WelcomeScreen();
                   },
                 ),
