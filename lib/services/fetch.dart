@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print
+
 import 'dart:convert';
 import 'package:get_storage/get_storage.dart';
 import 'package:secured_chat_app/services/rest_connector.dart';
@@ -8,6 +10,10 @@ class Fetch {
     return GetStorage().read('jwtToken');
   }
 
+  getId() {
+    return GetStorage().read('id');
+  }
+
   login(String email, String password) async {
     Map body = {
       "email": email,
@@ -15,7 +21,7 @@ class Fetch {
     };
     var jsonBody = const JsonEncoder().convert(body);
     var response = await RestConnector(
-      domain + urlLogin,
+      urlLogin,
       getJwtToken(),
       requestType: "POST",
       data: jsonBody,
@@ -31,7 +37,22 @@ class Fetch {
     };
     var jsonBody = const JsonEncoder().convert(body);
     var response = await RestConnector(
-      domain + urlRegister,
+      urlRegister,
+      getJwtToken(),
+      requestType: "POST",
+      data: jsonBody,
+    ).getData();
+    return response;
+  }
+
+  addFriend(String toEmail) async {
+    Map body = {
+      "id": getId(),
+      "toEmail": toEmail,
+    };
+    var jsonBody = const JsonEncoder().convert(body);
+    var response = await RestConnector(
+      urlAddFriend,
       getJwtToken(),
       requestType: "POST",
       data: jsonBody,

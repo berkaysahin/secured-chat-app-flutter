@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_final_fields
+
 import 'package:flutter/material.dart';
 import 'package:secured_chat_app/constants.dart';
 import 'package:secured_chat_app/screens/add_friends/add_friend_screen.dart';
@@ -13,10 +15,10 @@ class BottomNavigation extends StatefulWidget {
 
 class _BottomNavigation extends State<BottomNavigation> {
   int _selectedIndex = 1;
-  static const List<Widget> _widgetOptions = <Widget>[
+  static List<Widget> _widgetOptions = <Widget>[
     AddFriendScreen(),
-    MessageBoxScreen(),
-    ProfileScreen(),
+    const MessageBoxScreen(),
+    const ProfileScreen(),
   ];
 
   void _onItemTapped(int index) {

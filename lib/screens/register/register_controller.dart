@@ -21,7 +21,7 @@ class RegisterController extends GetxController {
     if (result["success"]) {
       Get.snackbar("Başarılı", "Giriş yapınız.");
       sleep(const Duration(seconds: 2));
-      Get.to(LoginScreen());
+      Get.to(() => LoginScreen());
     } else {
       Get.snackbar("Hata", result["error"]);
     }
