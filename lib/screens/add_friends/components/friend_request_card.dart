@@ -20,12 +20,20 @@ class FriendRequestCard extends StatelessWidget {
             children: [
               IconButton(
                   onPressed: () {
-                    Get.snackbar("Başarılı", "Arkadaş eklendi.");
+                    Get.snackbar(
+                      "Başarılı",
+                      "Arkadaş eklendi.",
+                      barBlur: 100,
+                    );
                   },
                   icon: const Icon(Icons.check)),
               IconButton(
                   onPressed: () {
-                    Get.snackbar("Başarılı", "Arkadaş isteği reddedildi.");
+                    Get.snackbar(
+                      "Başarılı",
+                      "Arkadaş isteği reddedildi.",
+                      barBlur: 100,
+                    );
                   },
                   icon: const Icon(Icons.clear)),
             ],

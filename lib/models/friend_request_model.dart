@@ -1,24 +1,19 @@
 class FriendRequest {
-  final int id;
-  final String name;
-  final String imageUrl;
+  final String id;
+  final String fromEmail;
 
   FriendRequest({
     this.id,
-    this.name,
-    this.imageUrl,
+    this.fromEmail,
   });
-}
 
-List<FriendRequest> friendRequests = [
-  FriendRequest(
-    id: 0,
-    name: 'Kullanıcı1',
-    imageUrl: 'assets/images/person.jpg',
-  ),
-  FriendRequest(
-    id: 1,
-    name: 'Kullanıcı2',
-    imageUrl: 'assets/images/person.jpg',
-  ),
-];
+  FriendRequest.fromJson(Map json)
+      : id = json['id'],
+        fromEmail = json['fromEmail'];
+
+  get value => null;
+
+  Map toJson() {
+    return {'id': id, 'fromEmail': fromEmail};
+  }
+}

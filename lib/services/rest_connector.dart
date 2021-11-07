@@ -33,7 +33,7 @@ class RestConnector {
         body: data,
         headers: {
           'content-type': 'application/json',
-          // 'Authorization': 'Bearer ' + jwtToken.toString(),
+          'Authorization': 'Bearer ' + jwtToken.toString(),
         },
       );
     } else if (requestType == "PUT") {

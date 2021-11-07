@@ -1,4 +1,4 @@
-// ignore_for_file: must_be_immutable
+// ignore_for_file: must_be_immutable, invalid_use_of_protected_member
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -8,7 +8,6 @@ import 'package:secured_chat_app/models/friends_model.dart';
 import 'package:secured_chat_app/screens/add_friends/add_friend_controller.dart';
 import 'package:secured_chat_app/screens/add_friends/components/friend_card.dart';
 import 'package:secured_chat_app/screens/add_friends/components/friend_request_card.dart';
-import 'package:secured_chat_app/models/friend_request_model.dart';
 
 class Body extends StatelessWidget {
   Body({
@@ -19,6 +18,8 @@ class Body extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    addFriendController.getFriendRequests();
+
     return Align(
       alignment: AlignmentDirectional.topCenter,
       child: SafeArea(
@@ -55,14 +56,17 @@ class Body extends StatelessWidget {
                   );
                 },
               ),
-              ListView.builder(
-                physics: const NeverScrollableScrollPhysics(),
-                shrinkWrap: true,
-                itemCount: friendRequests.length,
-                itemBuilder: (BuildContext context, int index) {
-                  final FriendRequest friendRequest = friendRequests[index];
-                  return (FriendRequestCard(name: friendRequest.name));
-                },
+              Obx(
+                () => ListView.builder(
+                  physics: const NeverScrollableScrollPhysics(),
+                  shrinkWrap: true,
+                  itemCount: addFriendController.getFriendRequestList.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    return (FriendRequestCard(
+                        name: addFriendController
+                            .getFriendRequestList.value[index].fromEmail));
+                  },
+                ),
               ),
               ListView.builder(
                 physics: const NeverScrollableScrollPhysics(),
