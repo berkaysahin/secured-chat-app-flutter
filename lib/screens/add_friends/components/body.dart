@@ -63,6 +63,9 @@ class Body extends StatelessWidget {
                   itemCount: addFriendController.getFriendRequestList.length,
                   itemBuilder: (BuildContext context, int index) {
                     return (FriendRequestCard(
+                        index: index,
+                        id: addFriendController
+                            .getFriendRequestList.value[index].id,
                         name: addFriendController
                             .getFriendRequestList.value[index].fromEmail));
                   },

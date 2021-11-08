@@ -1,13 +1,22 @@
+// ignore_for_file: must_be_immutable, list_remove_unrelated_type
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:secured_chat_app/screens/add_friends/add_friend_controller.dart';
 
 class FriendRequestCard extends StatelessWidget {
+  final int index;
   final String name;
+  final String id;
 
-  const FriendRequestCard({
+  FriendRequestCard({
     Key key,
+    @required this.index,
     @required this.name,
+    @required this.id,
   }) : super(key: key);
+
+  AddFriendController addFriendController = Get.find();
 
   @override
   Widget build(BuildContext context) {
@@ -19,12 +28,17 @@ class FriendRequestCard extends StatelessWidget {
           child: Row(
             children: [
               IconButton(
-                  onPressed: () {
-                    Get.snackbar(
-                      "Başarılı",
-                      "Arkadaş eklendi.",
-                      barBlur: 100,
-                    );
+                  onPressed: () async {
+                    final bool result =
+                        await addFriendController.acceptFriendRequests(id);
+                    if (result) {
+                      addFriendController.getFriendRequestList.removeAt(index);
+                      Get.snackbar(
+                        "Başarılı!",
+                        'Arkadaş isteği kabul edildi.',
+                        barBlur: 100,
+                      );
+                    }
                   },
                   icon: const Icon(Icons.check)),
               IconButton(

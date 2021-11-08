@@ -47,4 +47,18 @@ class AddFriendController extends GetxController {
       );
     }
   }
+
+  Future<bool> acceptFriendRequests(String id) async {
+    var result = await f.acceptFriendRequests(id);
+    if (result["success"]) {
+      return true;
+    } else {
+      Get.snackbar(
+        "Hata",
+        result["error"],
+        barBlur: 100,
+      );
+      return false;
+    }
+  }
 }
