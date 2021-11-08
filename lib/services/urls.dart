@@ -6,3 +6,5 @@ String urlAddFriend = domain + "/api/v1/user/addfriend";
 String urlGetAddFriendRequests = domain + "/api/v1/user/getaddfriendrequests";
 String urlAcceptFriendRequests =
     domain + "/api/v1/user/acceptaddfriendrequests";
+String urlRejectFriendRequests =
+    domain + "/api/v1/user/rejectaddfriendrequests";

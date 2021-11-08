@@ -87,4 +87,18 @@ class Fetch {
     ).getData();
     return response;
   }
+
+  rejectFriendRequests(String id) async {
+    Map body = {
+      "id": id,
+    };
+    var jsonBody = const JsonEncoder().convert(body);
+    var response = await RestConnector(
+      urlRejectFriendRequests,
+      getJwtToken(),
+      requestType: "POST",
+      data: jsonBody,
+    ).getData();
+    return response;
+  }
 }

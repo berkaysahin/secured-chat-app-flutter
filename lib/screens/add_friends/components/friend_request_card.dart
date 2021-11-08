@@ -42,12 +42,17 @@ class FriendRequestCard extends StatelessWidget {
                   },
                   icon: const Icon(Icons.check)),
               IconButton(
-                  onPressed: () {
-                    Get.snackbar(
-                      "Başarılı",
-                      "Arkadaş isteği reddedildi.",
-                      barBlur: 100,
-                    );
+                  onPressed: () async {
+                    final bool result =
+                        await addFriendController.rejectFriendRequests(id);
+                    if (result) {
+                      addFriendController.getFriendRequestList.removeAt(index);
+                      Get.snackbar(
+                        "Başarılı",
+                        "Arkadaş isteği reddedildi.",
+                        barBlur: 100,
+                      );
+                    }
                   },
                   icon: const Icon(Icons.clear)),
             ],
