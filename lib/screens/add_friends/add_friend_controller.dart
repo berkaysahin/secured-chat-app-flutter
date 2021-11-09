@@ -94,4 +94,18 @@ class AddFriendController extends GetxController {
       );
     }
   }
+
+  Future<bool> removeFriend(String id) async {
+    var result = await f.removeFriend(id);
+    if (result["success"]) {
+      return true;
+    } else {
+      Get.snackbar(
+        "Hata",
+        result["error"],
+        barBlur: 100,
+      );
+      return false;
+    }
+  }
 }

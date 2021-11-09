@@ -9,3 +9,4 @@ String urlAcceptFriendRequests =
 String urlRejectFriendRequests =
     domain + "/api/v1/user/rejectaddfriendrequests";
 String urlGetFriends = domain + "/api/v1/user/GetFriends";
+String urlRemoveFriend = domain + "/api/v1/user/RemoveFriend";
