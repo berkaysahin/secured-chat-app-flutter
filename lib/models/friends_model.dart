@@ -1,24 +1,19 @@
-class Friend {
-  final int id;
-  final String name;
-  final String imageUrl;
+class Friends {
+  final String id;
+  final String email;
 
-  Friend({
+  Friends({
     this.id,
-    this.name,
-    this.imageUrl,
+    this.email,
   });
-}
 
-List<Friend> friends = [
-  Friend(
-    id: 2,
-    name: 'Kullanıcı3',
-    imageUrl: 'assets/images/person.jpg',
-  ),
-  Friend(
-    id: 3,
-    name: 'Kullanıcı4',
-    imageUrl: 'assets/images/person.jpg',
-  ),
-];
+  Friends.fromJson(Map json)
+      : id = json['id'],
+        email = json['with'];
+
+  get value => null;
+
+  Map toJson() {
+    return {'id': id, 'with': email};
+  }
+}

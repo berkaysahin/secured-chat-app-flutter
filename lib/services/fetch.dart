@@ -101,4 +101,18 @@ class Fetch {
     ).getData();
     return response;
   }
+
+  getFriendsList() async {
+    Map body = {
+      "id": getId(),
+    };
+    var jsonBody = const JsonEncoder().convert(body);
+    var response = await RestConnector(
+      urlGetFriends,
+      getJwtToken(),
+      requestType: "POST",
+      data: jsonBody,
+    ).getData();
+    return response;
+  }
 }

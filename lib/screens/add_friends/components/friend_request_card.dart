@@ -33,6 +33,7 @@ class FriendRequestCard extends StatelessWidget {
                         await addFriendController.acceptFriendRequests(id);
                     if (result) {
                       addFriendController.getFriendRequestList.removeAt(index);
+                      addFriendController.getFriendsList();
                       Get.snackbar(
                         "Başarılı!",
                         'Arkadaş isteği kabul edildi.',
@@ -47,6 +48,7 @@ class FriendRequestCard extends StatelessWidget {
                         await addFriendController.rejectFriendRequests(id);
                     if (result) {
                       addFriendController.getFriendRequestList.removeAt(index);
+                      addFriendController.getFriendsList();
                       Get.snackbar(
                         "Başarılı",
                         "Arkadaş isteği reddedildi.",

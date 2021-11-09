@@ -3,12 +3,14 @@
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:secured_chat_app/models/friend_request_model.dart';
+import 'package:secured_chat_app/models/friends_model.dart';
 import 'package:secured_chat_app/services/fetch.dart';
 
 class AddFriendController extends GetxController {
   TextEditingController emailController = TextEditingController();
   var addFriendLoading = false.obs;
   var getFriendRequestList = RxList<FriendRequest>();
+  var getFriendList = RxList<Friends>();
 
   Fetch f = Fetch();
 
@@ -73,6 +75,23 @@ class AddFriendController extends GetxController {
         barBlur: 100,
       );
       return false;
+    }
+  }
+
+  getFriendsList() async {
+    getFriendList.clear();
+
+    var result = await f.getFriendsList();
+    if (result["success"]) {
+      getFriendList.value = (result["data"]["requests"] as List)
+          .map((e) => Friends.fromJson(e))
+          .toList();
+    } else {
+      Get.snackbar(
+        "Hata",
+        result["error"],
+        barBlur: 100,
+      );
     }
   }
 }

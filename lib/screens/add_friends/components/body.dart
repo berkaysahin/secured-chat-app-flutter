@@ -19,6 +19,7 @@ class Body extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     addFriendController.getFriendRequests();
+    addFriendController.getFriendsList();
 
     return Align(
       alignment: AlignmentDirectional.topCenter,
@@ -71,14 +72,19 @@ class Body extends StatelessWidget {
                   },
                 ),
               ),
-              ListView.builder(
-                physics: const NeverScrollableScrollPhysics(),
-                shrinkWrap: true,
-                itemCount: friends.length,
-                itemBuilder: (BuildContext context, int index) {
-                  final Friend friend = friends[index];
-                  return (FriendCard(name: friend.name));
-                },
+              Obx(
+                () => ListView.builder(
+                  physics: const NeverScrollableScrollPhysics(),
+                  shrinkWrap: true,
+                  itemCount: addFriendController.getFriendList.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    return (FriendCard(
+                        index: index,
+                        id: addFriendController.getFriendList.value[index].id,
+                        email: addFriendController
+                            .getFriendList.value[index].email));
+                  },
+                ),
               ),
             ],
           ),
