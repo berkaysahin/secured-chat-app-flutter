@@ -37,7 +37,7 @@ class Body extends StatelessWidget {
                   builder: (context) {
                     GetStorage().write('jwtToken', "");
                     GetStorage().write("id", "");
-                    return const WelcomeScreen();
+                    return WelcomeScreen();
                   },
                 ),
               );

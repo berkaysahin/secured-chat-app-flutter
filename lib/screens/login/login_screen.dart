@@ -8,7 +8,8 @@ class LoginScreen extends StatelessWidget {
   LoginScreen({
     Key key,
   }) : super(key: key);
-  LoginController loginController = Get.put(LoginController());
+
+  final LoginController loginController = Get.put(LoginController());
 
   @override
   Widget build(BuildContext context) {

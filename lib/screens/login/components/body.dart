@@ -1,5 +1,8 @@
+// ignore_for_file: must_be_immutable
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:secured_chat_app/components/already_have_an_account_check.dart';
 import 'package:secured_chat_app/components/rounded_button.dart';
 import 'package:secured_chat_app/components/rounded_input_field.dart';
@@ -8,12 +11,14 @@ import 'package:secured_chat_app/screens/login/components/background.dart';
 import 'package:secured_chat_app/screens/login/loginController.dart';
 import 'package:secured_chat_app/screens/register/register_screen.dart';
 import 'package:get/get.dart';
+import 'package:secured_chat_app/services/socket_controller.dart';
 
 class Body extends StatelessWidget {
   Body({
     Key key,
   }) : super(key: key);
   LoginController loginController = Get.find();
+  SocketController socketController = Get.find();
 
   @override
   Widget build(BuildContext context) {
@@ -51,8 +56,9 @@ class Body extends StatelessWidget {
                 text: loginController.loginLoading.value
                     ? "Giriş Yapılıyor"
                     : "Giriş Yap",
-                press: () {
-                  loginController.login();
+                press: () async {
+                  await loginController.login();
+                  socketController.initSignalR();
                 },
               ),
             ),
