@@ -129,4 +129,18 @@ class Fetch {
     ).getData();
     return response;
   }
+
+  getMessageBoxList() async {
+    Map body = {
+      "id": getId(),
+    };
+    var jsonBody = const JsonEncoder().convert(body);
+    var response = await RestConnector(
+      urlGetMessageBox,
+      getJwtToken(),
+      requestType: "POST",
+      data: jsonBody,
+    ).getData();
+    return response;
+  }
 }

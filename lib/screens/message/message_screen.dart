@@ -4,11 +4,14 @@ import 'package:secured_chat_app/models/message_model.dart';
 import 'package:secured_chat_app/models/user_model.dart';
 
 class ChatScreen extends StatefulWidget {
-  final User user;
-
+  final String nickname;
+  final String friendId;
+  final bool isOnline;
   const ChatScreen({
     Key key,
-    this.user,
+    this.nickname,
+    this.isOnline,
+    this.friendId,
   }) : super(key: key);
 
   @override
@@ -192,13 +195,13 @@ class _ChatScreenState extends State<ChatScreen> {
           text: TextSpan(
             children: [
               TextSpan(
-                  text: widget.user.name,
+                  text: widget.nickname,
                   style: const TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.w400,
                   )),
               const TextSpan(text: '\n'),
-              widget.user.isOnline
+              widget.isOnline
                   ? const TextSpan(
                       text: 'Çevrimiçi',
                       style: TextStyle(

@@ -39,6 +39,7 @@ dependencies:
   http: ^0.13.4
   get_storage: ^2.0.3
   object_mapper: ^1.2.1
+  intl: ^0.17.0
 
 dev_dependencies:
   flutter_test:

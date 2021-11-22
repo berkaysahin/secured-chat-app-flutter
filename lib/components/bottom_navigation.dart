@@ -17,7 +17,7 @@ class _BottomNavigation extends State<BottomNavigation> {
   int _selectedIndex = 1;
   static List<Widget> _widgetOptions = <Widget>[
     AddFriendScreen(),
-    const MessageBoxScreen(),
+    MessageBoxScreen(),
     const ProfileScreen(),
   ];
 

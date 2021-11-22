@@ -11,3 +11,4 @@ String urlRejectFriendRequests =
 String urlGetFriends = domain + "/api/v1/friend/GetFriends";
 String urlRemoveFriend = domain + "/api/v1/friend/RemoveFriend";
 String urlSocketMainHub = domain + "/mainhub";
+String urlGetMessageBox = domain + "/api/v1/message/GetMessageBox";

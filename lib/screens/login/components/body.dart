@@ -2,7 +2,6 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:get_storage/get_storage.dart';
 import 'package:secured_chat_app/components/already_have_an_account_check.dart';
 import 'package:secured_chat_app/components/rounded_button.dart';
 import 'package:secured_chat_app/components/rounded_input_field.dart';
