@@ -14,7 +14,7 @@ class MessageBoxController extends GetxController {
 
     var result = await f.getMessageBoxList();
     if (result["success"]) {
-      messageBoxList.value = (result["data"]["requests"] as List)
+      messageBoxList.value = (result["data"]["response"] as List)
           .map((e) => MessageBox.fromJson(e))
           .toList();
     } else {

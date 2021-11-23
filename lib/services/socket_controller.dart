@@ -10,6 +10,9 @@ class SocketController extends GetxController {
   HubConnection hubConnection;
   RxBool isConnected = false.obs;
 
+  String id = GetStorage().read('id');
+  String jwtToken = GetStorage().read('jwtToken');
+
   void initSignalR() async {
     hubConnection = HubConnectionBuilder()
         .withUrl(
@@ -22,6 +25,7 @@ class SocketController extends GetxController {
       await hubConnection.start().then(
         (value) async {
           await login();
+          hubConnection.on("ChatLogin", _handleNewLogin);
           Get.to(() => const BottomNavigation());
         },
       );
@@ -44,10 +48,10 @@ class SocketController extends GetxController {
       Get.snackbar("Başarılı", "Tekrar bağlantı sağlandı.");
     });
 
-    hubConnection.on("clientJoined", _handleNewMessage);
+    hubConnection.on("clientJoined", _handleNewLogin);
   }
 
-  void _handleNewMessage(List<Object> arguments) {
+  void _handleNewLogin(List<Object> arguments) {
     Get.snackbar(
       "Kullanıcı Online",
       arguments[0].toString(),
@@ -57,8 +61,8 @@ class SocketController extends GetxController {
 
   login() async {
     List<Object> values = [
-      GetStorage().read('id'),
-      GetStorage().read('jwtToken'),
+      id,
+      jwtToken,
     ];
     await hubConnection.invoke("ChatLogin", args: values);
   }

@@ -143,4 +143,19 @@ class Fetch {
     ).getData();
     return response;
   }
+
+  getMessages(String friendId) async {
+    Map body = {
+      "id": getId(),
+      "friendId": friendId,
+    };
+    var jsonBody = const JsonEncoder().convert(body);
+    var response = await RestConnector(
+      urlGetMessages,
+      getJwtToken(),
+      requestType: "POST",
+      data: jsonBody,
+    ).getData();
+    return response;
+  }
 }
