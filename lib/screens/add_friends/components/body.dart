@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:secured_chat_app/components/rounded_button.dart';
 import 'package:secured_chat_app/components/rounded_input_field.dart';
-import 'package:secured_chat_app/models/friends_model.dart';
 import 'package:secured_chat_app/screens/add_friends/add_friend_controller.dart';
 import 'package:secured_chat_app/screens/add_friends/components/friend_card.dart';
 import 'package:secured_chat_app/screens/add_friends/components/friend_request_card.dart';

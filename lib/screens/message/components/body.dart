@@ -3,9 +3,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:secured_chat_app/components/rounded_input_field.dart';
 import 'package:secured_chat_app/models/message_model.dart';
 import 'package:secured_chat_app/screens/message/components/chat_bubble.dart';
 import 'package:secured_chat_app/screens/message/message_controller.dart';
+import 'package:secured_chat_app/services/socket_controller.dart';
 
 class Body extends StatelessWidget {
   final String nickname;
@@ -20,6 +22,7 @@ class Body extends StatelessWidget {
   }) : super(key: key);
 
   MessageController messageController = Get.find();
+  SocketController socketController = Get.find();
 
   @override
   Widget build(BuildContext context) {
@@ -33,19 +36,33 @@ class Body extends StatelessWidget {
         color: Colors.white,
         child: Row(
           children: <Widget>[
-            const Expanded(
-              child: TextField(
-                decoration: InputDecoration.collapsed(
-                  hintText: 'Mesaj gönder..',
-                ),
-                textCapitalization: TextCapitalization.sentences,
+            Expanded(
+              child: RoundedInputField(
+                textEditingController: messageController.messageTextController,
+                hintText: "Mesaj..",
+                onChanged: (value) async {},
               ),
             ),
             IconButton(
               icon: const Icon(Icons.send),
               iconSize: 25,
               color: Theme.of(context).primaryColor,
-              onPressed: () {},
+              onPressed: () async {
+                await socketController.sendMessage(
+                    friendId, messageController.messageTextController.text);
+
+                Message message = Message(
+                  sender: GetStorage().read('id').toString(),
+                  to: friendId,
+                  message: messageController.messageTextController.text,
+                  read: true,
+                  sendDate: DateTime.now().toString(),
+                );
+
+                messageController.receiveMessage(message);
+
+                messageController.messageTextController.clear();
+              },
             ),
           ],
         ),
@@ -98,7 +115,7 @@ class Body extends StatelessWidget {
           Expanded(
               child: Obx(
             () => ListView.builder(
-              reverse: true,
+              reverse: false,
               padding: const EdgeInsets.all(20),
               itemCount: messageController.messageList.length,
               itemBuilder: (BuildContext context, int index) {
@@ -115,22 +132,5 @@ class Body extends StatelessWidget {
         ],
       ),
     );
-
-    // return Scaffold(
-    //     backgroundColor: Colors.white,
-    //     body: Obx(
-    //       () => ListView.builder(
-    //         itemCount: messageBoxController.messageBoxList.length,
-    //         itemBuilder: (BuildContext context, int index) {
-    //           return MessageBoxCard(
-    //             friendId: messageBoxController.messageBoxList[index].friendId,
-    //             message: messageBoxController.messageBoxList[index].message,
-    //             nickname: messageBoxController.messageBoxList[index].nickname,
-    //             read: messageBoxController.messageBoxList[index].read,
-    //             sendDate: messageBoxController.messageBoxList[index].sendDate,
-    //           );
-    //         },
-    //       ),
-    //     ));
   }
 }

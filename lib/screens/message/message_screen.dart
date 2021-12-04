@@ -16,8 +16,6 @@ class ChatScreen extends StatelessWidget {
     this.friendId,
   }) : super(key: key);
 
-  MessageController messageController = Get.put(MessageController());
-
   @override
   Widget build(BuildContext context) {
     return Body(

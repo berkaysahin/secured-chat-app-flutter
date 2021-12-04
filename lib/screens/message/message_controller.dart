@@ -1,11 +1,13 @@
 // ignore_for_file: file_names
 
+import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:secured_chat_app/models/message_model.dart';
 import 'package:secured_chat_app/services/fetch.dart';
 
 class MessageController extends GetxController {
   var messageList = RxList<Message>();
+  TextEditingController messageTextController = TextEditingController();
 
   Fetch f = Fetch();
 
@@ -24,5 +26,9 @@ class MessageController extends GetxController {
         barBlur: 100,
       );
     }
+  }
+
+  receiveMessage(Message message) async {
+    messageList.add(message);
   }
 }
