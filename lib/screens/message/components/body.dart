@@ -40,6 +40,7 @@ class Body extends StatelessWidget {
               child: RoundedInputField(
                 textEditingController: messageController.messageTextController,
                 hintText: "Mesaj..",
+                icon: Icons.message,
                 onChanged: (value) async {},
               ),
             ),
@@ -48,6 +49,15 @@ class Body extends StatelessWidget {
               iconSize: 25,
               color: Theme.of(context).primaryColor,
               onPressed: () async {
+                if (messageController.messageTextController.text == "") {
+                  Get.snackbar(
+                    "Uyarı!",
+                    "Boş mesaj gönderilemez.",
+                    barBlur: 100,
+                  );
+                  return;
+                }
+
                 await socketController.sendMessage(
                     friendId, messageController.messageTextController.text);
 
