@@ -51,7 +51,8 @@ class SocketController extends GetxController {
       Get.snackbar("Uyarı", "Bağlantı tekrar deneniyor..");
     });
 
-    hubConnection.onreconnected(({connectionId}) {
+    hubConnection.onreconnected(({connectionId}) async {
+      await login();
       Get.snackbar("Başarılı", "Tekrar bağlantı sağlandı.");
     });
 
@@ -60,11 +61,11 @@ class SocketController extends GetxController {
   }
 
   void _handleNewLogin(List<Object> arguments) {
-    Get.snackbar(
-      "Kullanıcı Online",
-      arguments[0].toString(),
-      barBlur: 100,
-    );
+    // Get.snackbar(
+    //   "Kullanıcı Online",
+    //   arguments[0].toString(),
+    //   barBlur: 100,
+    // );
   }
 
   void _handleNewMessage(List<Object> arguments) {
@@ -88,7 +89,7 @@ class SocketController extends GetxController {
       id,
       jwtToken,
     ];
-    await hubConnection.invoke("ChatLogin", args: values);
+    await hubConnection.invoke("Connection", args: values);
   }
 
   sendMessage(String friendId, String message) async {
