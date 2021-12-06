@@ -60,6 +60,14 @@ class SocketController extends GetxController {
     hubConnection.on("onlineList", _handleOnlineList);
   }
 
+  void _handleNewLogin(List<Object> arguments) {
+    // Get.snackbar(
+    //   "Kullanıcı Online",
+    //   arguments[0].toString(),
+    //   barBlur: 100,
+    // );
+  }
+
   void _handleNewMessage(List<Object> arguments) {
     // arguments[0] senderId
     // arguments[1] message
