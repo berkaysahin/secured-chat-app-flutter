@@ -7,6 +7,7 @@ import 'package:secured_chat_app/services/fetch.dart';
 
 class MessageController extends GetxController {
   var messageList = RxList<Message>();
+  var onlineList = RxList<String>();
   TextEditingController messageTextController = TextEditingController();
 
   Fetch f = Fetch();
@@ -29,6 +30,6 @@ class MessageController extends GetxController {
   }
 
   receiveMessage(Message message) async {
-    messageList.add(message);
+    messageList.insert(0, message);
   }
 }

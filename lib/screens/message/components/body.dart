@@ -1,9 +1,12 @@
 // ignore_for_file: must_be_immutable
 
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:secured_chat_app/components/rounded_input_field.dart';
+import 'package:secured_chat_app/constants.dart';
 import 'package:secured_chat_app/models/message_model.dart';
 import 'package:secured_chat_app/screens/message/components/chat_bubble.dart';
 import 'package:secured_chat_app/screens/message/message_controller.dart';
@@ -82,35 +85,32 @@ class Body extends StatelessWidget {
     return Scaffold(
       backgroundColor: const Color(0xFFF6F6F6),
       appBar: AppBar(
+        backgroundColor: primaryColor,
         brightness: Brightness.dark,
         centerTitle: true,
-        title: RichText(
-          textAlign: TextAlign.center,
-          text: TextSpan(
-            children: [
-              TextSpan(
-                  text: nickname,
+        title: Obx(
+          () => RichText(
+            textAlign: TextAlign.center,
+            text: TextSpan(
+              children: [
+                TextSpan(
+                    text: nickname,
+                    style: const TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w400,
+                    )),
+                const TextSpan(text: '\n'),
+                TextSpan(
+                  text: messageController.onlineList.contains(friendId)
+                      ? 'Çevrimiçi'
+                      : 'Çevrimdışı',
                   style: const TextStyle(
-                    fontSize: 16,
+                    fontSize: 11,
                     fontWeight: FontWeight.w400,
-                  )),
-              const TextSpan(text: '\n'),
-              isOnline
-                  ? const TextSpan(
-                      text: 'Çevrimiçi',
-                      style: TextStyle(
-                        fontSize: 11,
-                        fontWeight: FontWeight.w400,
-                      ),
-                    )
-                  : const TextSpan(
-                      text: 'Çevrimdışı',
-                      style: TextStyle(
-                        fontSize: 11,
-                        fontWeight: FontWeight.w400,
-                      ),
-                    )
-            ],
+                  ),
+                )
+              ],
+            ),
           ),
         ),
         leading: IconButton(
@@ -125,7 +125,7 @@ class Body extends StatelessWidget {
           Expanded(
               child: Obx(
             () => ListView.builder(
-              reverse: false,
+              reverse: true,
               padding: const EdgeInsets.all(20),
               itemCount: messageController.messageList.length,
               itemBuilder: (BuildContext context, int index) {

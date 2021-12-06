@@ -1,6 +1,6 @@
 // ignore_for_file: file_names
 
-import 'dart:developer';
+import 'dart:convert';
 
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
@@ -32,7 +32,7 @@ class SocketController extends GetxController {
         (value) async {
           await login();
 
-          hubConnection.on("ChatLogin", _handleNewLogin);
+          hubConnection.on("Connection", _handleNewLogin);
           Get.to(() => const BottomNavigation());
         },
       );
@@ -56,16 +56,8 @@ class SocketController extends GetxController {
       Get.snackbar("Başarılı", "Tekrar bağlantı sağlandı.");
     });
 
-    hubConnection.on("clientJoined", _handleNewLogin);
     hubConnection.on("receiveMessage", _handleNewMessage);
-  }
-
-  void _handleNewLogin(List<Object> arguments) {
-    // Get.snackbar(
-    //   "Kullanıcı Online",
-    //   arguments[0].toString(),
-    //   barBlur: 100,
-    // );
+    hubConnection.on("onlineList", _handleOnlineList);
   }
 
   void _handleNewMessage(List<Object> arguments) {
@@ -84,12 +76,21 @@ class SocketController extends GetxController {
     messageController.receiveMessage(message);
   }
 
+  void _handleOnlineList(List<Object> arguments) {
+    messageController.onlineList.clear();
+
+    var decoded = jsonDecode(arguments[0]);
+    decoded.forEach((item) {
+      messageController.onlineList.add(item);
+    });
+  }
+
   login() async {
     List<Object> values = [
       id,
       jwtToken,
     ];
-    await hubConnection.invoke("Connection", args: values);
+    hubConnection.invoke("Connection", args: values);
   }
 
   sendMessage(String friendId, String message) async {
