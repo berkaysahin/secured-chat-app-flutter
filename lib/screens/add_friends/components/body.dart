@@ -4,9 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:secured_chat_app/components/rounded_button.dart';
 import 'package:secured_chat_app/components/rounded_input_field.dart';
+import 'package:secured_chat_app/models/screen_enum.dart';
 import 'package:secured_chat_app/screens/add_friends/add_friend_controller.dart';
 import 'package:secured_chat_app/screens/add_friends/components/friend_card.dart';
 import 'package:secured_chat_app/screens/add_friends/components/friend_request_card.dart';
+import 'package:secured_chat_app/services/socket_controller.dart';
 
 class Body extends StatelessWidget {
   Body({
@@ -14,9 +16,13 @@ class Body extends StatelessWidget {
   }) : super(key: key);
 
   AddFriendController addFriendController = Get.find();
+  SocketController socketController = Get.find();
 
   @override
   Widget build(BuildContext context) {
+    socketController.activeScreen.value = ScreenEnum.Others;
+    socketController.activeChatFriendId.value = "";
+
     addFriendController.getFriendRequests();
     addFriendController.getFriendsList();
 

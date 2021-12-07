@@ -5,16 +5,22 @@ import 'dart:convert';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:secured_chat_app/components/bottom_navigation.dart';
+import 'package:secured_chat_app/models/message_box_model.dart';
 import 'package:secured_chat_app/models/message_model.dart';
+import 'package:secured_chat_app/models/screen_enum.dart';
 import 'package:secured_chat_app/screens/message/message_controller.dart';
+import 'package:secured_chat_app/screens/message_box/message_box_controller.dart';
 import 'package:secured_chat_app/services/urls.dart';
 import 'package:signalr_netcore/signalr_client.dart';
 
 class SocketController extends GetxController {
   HubConnection hubConnection;
   RxBool isConnected = false.obs;
+  Rx<ScreenEnum> activeScreen = Rx<ScreenEnum>(ScreenEnum.Others);
+  RxString activeChatFriendId = "".obs;
 
   MessageController messageController = Get.put(MessageController());
+  MessageBoxController messageBoxController = Get.put(MessageBoxController());
 
   String id = GetStorage().read('id');
   String jwtToken = GetStorage().read('jwtToken');
@@ -81,7 +87,13 @@ class SocketController extends GetxController {
       sendDate: arguments[2].toString(),
     );
 
+    if (activeScreen.value == ScreenEnum.Message &&
+        activeChatFriendId.value == arguments[0]) {
+      switchToReadMessages(activeChatFriendId.toString());
+    }
+
     messageController.receiveMessage(message);
+    messageBoxController.getMessageBoxList();
   }
 
   void _handleOnlineList(List<Object> arguments) {
@@ -110,5 +122,15 @@ class SocketController extends GetxController {
       jwtToken,
     ];
     await hubConnection.invoke("SendMessage", args: values);
+    messageBoxController.getMessageBoxList();
+  }
+
+  switchToReadMessages(String friendId) async {
+    List<Object> values = [
+      id,
+      friendId,
+      jwtToken,
+    ];
+    await hubConnection.invoke("SwitchToReadMessages", args: values);
   }
 }

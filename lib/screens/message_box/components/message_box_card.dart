@@ -47,7 +47,7 @@ class MessageBoxCard extends StatelessWidget {
           children: <Widget>[
             Container(
               padding: const EdgeInsets.all(2),
-              decoration: !read
+              decoration: (message != "" && !read)
                   ? BoxDecoration(
                       borderRadius: const BorderRadius.all(Radius.circular(40)),
                       border: Border.all(
@@ -97,7 +97,7 @@ class MessageBoxCard extends StatelessWidget {
                               fontWeight: FontWeight.bold,
                             ),
                           ),
-                          !read
+                          (message != "" && !read)
                               ? Container(
                                   margin: const EdgeInsets.only(left: 5),
                                   width: 7,

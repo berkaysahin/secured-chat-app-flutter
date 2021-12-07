@@ -6,6 +6,7 @@ import 'package:secured_chat_app/components/already_have_an_account_check.dart';
 import 'package:secured_chat_app/components/rounded_button.dart';
 import 'package:secured_chat_app/components/rounded_input_field.dart';
 import 'package:secured_chat_app/components/rounded_password_field.dart';
+import 'package:secured_chat_app/models/screen_enum.dart';
 import 'package:secured_chat_app/screens/login/components/background.dart';
 import 'package:secured_chat_app/screens/login/loginController.dart';
 import 'package:secured_chat_app/screens/register/register_screen.dart';
@@ -21,6 +22,9 @@ class Body extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    socketController.activeScreen.value = ScreenEnum.Others;
+    socketController.activeChatFriendId.value = "";
+
     Size size = MediaQuery.of(context).size;
     return Background(
       child: SingleChildScrollView(

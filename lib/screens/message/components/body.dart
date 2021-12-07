@@ -8,8 +8,10 @@ import 'package:get_storage/get_storage.dart';
 import 'package:secured_chat_app/components/rounded_input_field.dart';
 import 'package:secured_chat_app/constants.dart';
 import 'package:secured_chat_app/models/message_model.dart';
+import 'package:secured_chat_app/models/screen_enum.dart';
 import 'package:secured_chat_app/screens/message/components/chat_bubble.dart';
 import 'package:secured_chat_app/screens/message/message_controller.dart';
+import 'package:secured_chat_app/screens/message_box/message_box_controller.dart';
 import 'package:secured_chat_app/services/socket_controller.dart';
 
 class Body extends StatelessWidget {
@@ -25,10 +27,14 @@ class Body extends StatelessWidget {
   }) : super(key: key);
 
   MessageController messageController = Get.find();
+  MessageBoxController messageBoxController = Get.find();
   SocketController socketController = Get.find();
 
   @override
   Widget build(BuildContext context) {
+    socketController.activeScreen.value = ScreenEnum.Message;
+    socketController.activeChatFriendId.value = friendId;
+    socketController.switchToReadMessages(friendId);
     messageController.getMessages(friendId);
     String prevUserId;
 
@@ -117,6 +123,9 @@ class Body extends StatelessWidget {
             icon: const Icon(Icons.arrow_back_ios),
             color: Colors.white,
             onPressed: () {
+              messageBoxController.getMessageBoxList();
+              socketController.activeScreen.value = ScreenEnum.Others;
+              socketController.activeChatFriendId.value = "";
               Navigator.pop(context);
             }),
       ),

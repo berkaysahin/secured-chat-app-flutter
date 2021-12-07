@@ -3,6 +3,7 @@ class MessageBox {
   final String nickname;
   final String message;
   final String sendDate;
+  final String lastSenderUserId;
   final bool read;
 
   MessageBox({
@@ -10,6 +11,7 @@ class MessageBox {
     this.nickname,
     this.message,
     this.sendDate,
+    this.lastSenderUserId,
     this.read,
   });
 
@@ -21,6 +23,7 @@ class MessageBox {
             ? ''
             : json['sendDate']
                 .toString(), //json['sendDate'].toString() DateTime,
+        lastSenderUserId = json['lastSenderUserId'],
         read = json['read'];
 
   get value => null;
