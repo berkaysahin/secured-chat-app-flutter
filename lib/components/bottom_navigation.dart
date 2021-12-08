@@ -18,7 +18,7 @@ class _BottomNavigation extends State<BottomNavigation> {
   static List<Widget> _widgetOptions = <Widget>[
     AddFriendScreen(),
     MessageBoxScreen(),
-    const ProfileScreen(),
+    ProfileScreen(),
   ];
 
   void _onItemTapped(int index) {

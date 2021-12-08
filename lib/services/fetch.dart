@@ -158,4 +158,16 @@ class Fetch {
     ).getData();
     return response;
   }
+
+  getProfile() async {
+    Map body = {};
+    var jsonBody = const JsonEncoder().convert(body);
+    var response = await RestConnector(
+      urlGetProfile,
+      getJwtToken(),
+      requestType: "POST",
+      data: jsonBody,
+    ).getData();
+    return response;
+  }
 }
