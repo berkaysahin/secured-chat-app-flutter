@@ -133,4 +133,8 @@ class SocketController extends GetxController {
     ];
     await hubConnection.invoke("SwitchToReadMessages", args: values);
   }
+
+  logout() async {
+    await hubConnection.invoke("Logout");
+  }
 }

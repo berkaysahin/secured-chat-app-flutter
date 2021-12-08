@@ -49,6 +49,7 @@ class Body extends StatelessWidget {
                     builder: (context) {
                       GetStorage().write('jwtToken', "");
                       GetStorage().write("id", "");
+                      socketController.logout();
                       return WelcomeScreen();
                     },
                   ),
