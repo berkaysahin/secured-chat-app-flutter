@@ -1,11 +1,14 @@
 // ignore_for_file: avoid_print
 
 import 'dart:convert';
+import 'dart:io';
+import 'package:dio/dio.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:secured_chat_app/services/rest_connector.dart';
 import 'package:secured_chat_app/services/urls.dart';
 
 class Fetch {
+  final Dio _dio = Dio();
   getJwtToken() {
     return GetStorage().read('jwtToken');
   }
@@ -168,6 +171,25 @@ class Fetch {
       requestType: "POST",
       data: jsonBody,
     ).getData();
+    return response;
+  }
+
+  changeProfilePhoto(File image) async {
+    var images = await MultipartFile.fromFile(image.path,
+        filename: image.path.split('/').last);
+
+    var body = FormData.fromMap({
+      'profileImage': images,
+    });
+
+    _dio.options.headers["Authorization"] = "Bearer ${getJwtToken()}";
+    _dio.options.method = "POST";
+    final response = await _dio.post(
+      urlChangeProfileImage,
+      data: body,
+      options: Options(),
+    );
+
     return response;
   }
 }

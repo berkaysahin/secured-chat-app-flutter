@@ -14,3 +14,5 @@ String urlSocketMainHub = domain + "/mainhub";
 String urlGetMessageBox = domain + "/api/v1/message/GetMessageBox";
 String urlGetMessages = domain + "/api/v1/message/GetMessages";
 String urlGetProfile = domain + "/api/v1/user/profile";
+String urlChangeProfileImage = domain + "/api/v1/user/ChangeProfileImage";
+String urlAvatarImages = domain + "/Contents/Images/Avatar/";

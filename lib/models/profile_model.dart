@@ -1,18 +1,18 @@
 class Profile {
   final String nickname;
   final String email;
-  final String imageUrl;
+  final String avatarUrl;
 
   Profile({
     this.nickname,
     this.email,
-    this.imageUrl,
+    this.avatarUrl,
   });
 
   Profile.fromJson(Map json)
       : nickname = json['nickname'],
         email = json['email'],
-        imageUrl = json['imageUrl'];
+        avatarUrl = json['avatarUrl'];
 
   get value => null;
 }

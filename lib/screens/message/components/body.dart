@@ -1,7 +1,5 @@
 // ignore_for_file: must_be_immutable
 
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
@@ -18,12 +16,14 @@ class Body extends StatelessWidget {
   final String nickname;
   final String friendId;
   final bool isOnline;
+  final String avatarUrl;
 
   Body({
     Key key,
     this.nickname,
     this.isOnline,
     this.friendId,
+    this.avatarUrl,
   }) : super(key: key);
 
   MessageController messageController = Get.find();
@@ -37,6 +37,7 @@ class Body extends StatelessWidget {
     socketController.switchToReadMessages(friendId);
     messageController.getMessages(friendId);
     String prevUserId;
+    socketController.activeChatFriendAvatarUrl.value = avatarUrl;
 
     _sendMessageArea() {
       return Container(
@@ -143,7 +144,10 @@ class Body extends StatelessWidget {
                 final bool isSameUser = prevUserId == message.sender;
                 prevUserId = message.sender;
                 return ChatBubble(
-                    message: message, isMe: isMe, isSameUser: isSameUser);
+                    message: message,
+                    isMe: isMe,
+                    isSameUser: isSameUser,
+                    avatarUrl: avatarUrl);
               },
             ),
           )),

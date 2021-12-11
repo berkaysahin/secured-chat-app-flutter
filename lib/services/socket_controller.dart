@@ -5,7 +5,6 @@ import 'dart:convert';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:secured_chat_app/components/bottom_navigation.dart';
-import 'package:secured_chat_app/models/message_box_model.dart';
 import 'package:secured_chat_app/models/message_model.dart';
 import 'package:secured_chat_app/models/screen_enum.dart';
 import 'package:secured_chat_app/screens/message/message_controller.dart';
@@ -18,6 +17,7 @@ class SocketController extends GetxController {
   RxBool isConnected = false.obs;
   Rx<ScreenEnum> activeScreen = Rx<ScreenEnum>(ScreenEnum.Others);
   RxString activeChatFriendId = "".obs;
+  RxString activeChatFriendAvatarUrl = "".obs;
 
   MessageController messageController = Get.put(MessageController());
   MessageBoxController messageBoxController = Get.put(MessageBoxController());
@@ -64,6 +64,7 @@ class SocketController extends GetxController {
 
     hubConnection.on("receiveMessage", _handleNewMessage);
     hubConnection.on("onlineList", _handleOnlineList);
+    hubConnection.on("friendProfileImageChanged", _friendProfileImageChanged);
   }
 
   void _handleNewLogin(List<Object> arguments) {
@@ -105,6 +106,14 @@ class SocketController extends GetxController {
     });
   }
 
+  void _friendProfileImageChanged(List<Object> arguments) {
+    messageBoxController.getMessageBoxList();
+
+    if (activeChatFriendId.value == arguments[0].toString()) {
+      activeChatFriendAvatarUrl.value = arguments[1].toString();
+    }
+  }
+
   login() async {
     List<Object> values = [
       id,
@@ -132,6 +141,14 @@ class SocketController extends GetxController {
       jwtToken,
     ];
     await hubConnection.invoke("SwitchToReadMessages", args: values);
+  }
+
+  profileImageChanged() async {
+    List<Object> values = [
+      id,
+      jwtToken,
+    ];
+    await hubConnection.invoke("ProfileImageChanged", args: values);
   }
 
   logout() async {

@@ -5,6 +5,7 @@ class MessageBox {
   final String sendDate;
   final String lastSenderUserId;
   final bool read;
+  String avatarUrl;
 
   MessageBox({
     this.friendId,
@@ -13,6 +14,7 @@ class MessageBox {
     this.sendDate,
     this.lastSenderUserId,
     this.read,
+    this.avatarUrl,
   });
 
   MessageBox.fromJson(Map json)
@@ -24,7 +26,8 @@ class MessageBox {
             : json['sendDate']
                 .toString(), //json['sendDate'].toString() DateTime,
         lastSenderUserId = json['lastSenderUserId'],
-        read = json['read'];
+        read = json['read'],
+        avatarUrl = json['avatarUrl'];
 
   get value => null;
 }

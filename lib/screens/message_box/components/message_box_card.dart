@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:secured_chat_app/screens/message/message_screen.dart';
 import 'package:secured_chat_app/screens/message_box/message_box_controller.dart';
+import 'package:secured_chat_app/services/urls.dart';
 
 class MessageBoxCard extends StatelessWidget {
   final String friendId;
@@ -13,6 +14,7 @@ class MessageBoxCard extends StatelessWidget {
   final String sendDate;
   final bool read;
   final bool isOnline = false;
+  final String avatarUrl;
 
   MessageBoxCard({
     Key key,
@@ -21,6 +23,7 @@ class MessageBoxCard extends StatelessWidget {
     @required this.message,
     @required this.sendDate,
     @required this.read,
+    @required this.avatarUrl,
   }) : super(key: key);
 
   MessageBoxController messageBoxController = Get.find();
@@ -35,6 +38,7 @@ class MessageBoxCard extends StatelessWidget {
             nickname: nickname,
             friendId: friendId,
             isOnline: isOnline,
+            avatarUrl: avatarUrl,
           ),
         ),
       ),
@@ -73,9 +77,11 @@ class MessageBoxCard extends StatelessWidget {
                         ),
                       ],
                     ),
-              child: const CircleAvatar(
+              child: CircleAvatar(
                 radius: 35,
-                backgroundImage: AssetImage('assets/images/person.jpg'),
+                backgroundImage: (avatarUrl == null || avatarUrl == '')
+                    ? const AssetImage('assets/images/person.jpg')
+                    : NetworkImage(urlAvatarImages + avatarUrl),
               ),
             ),
             Container(

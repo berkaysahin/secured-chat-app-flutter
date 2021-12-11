@@ -1,21 +1,30 @@
 // ignore_for_file: must_be_immutable, prefer_const_constructors_in_immutables
 
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:secured_chat_app/constants.dart';
 import 'package:secured_chat_app/models/message_model.dart';
+import 'package:secured_chat_app/screens/profile/profile_controller.dart';
+import 'package:secured_chat_app/services/socket_controller.dart';
+import 'package:secured_chat_app/services/urls.dart';
 
 class ChatBubble extends StatelessWidget {
   final Message message;
   final bool isMe;
   final bool isSameUser;
+  final String avatarUrl;
 
   ChatBubble({
     Key key,
     @required this.message,
     @required this.isMe,
     @required this.isSameUser,
+    @required this.avatarUrl,
   }) : super(key: key);
+
+  ProfileController profileController = Get.find();
+  SocketController socketController = Get.find();
 
   @override
   Widget build(BuildContext context) {
@@ -78,9 +87,16 @@ class ChatBubble extends StatelessWidget {
                           ),
                         ],
                       ),
-                      child: const CircleAvatar(
-                        radius: 15,
-                        backgroundImage: AssetImage('assets/images/person.jpg'),
+                      child: Obx(
+                        () => CircleAvatar(
+                          radius: 15,
+                          backgroundImage:
+                              (profileController.avatarUrl.value == null ||
+                                      profileController.avatarUrl.value == '')
+                                  ? const AssetImage('assets/images/person.jpg')
+                                  : NetworkImage(urlAvatarImages +
+                                      profileController.avatarUrl.value),
+                        ),
                       ),
                     ),
                   ],
@@ -134,9 +150,20 @@ class ChatBubble extends StatelessWidget {
                           ),
                         ],
                       ),
-                      child: const CircleAvatar(
-                        radius: 15,
-                        backgroundImage: AssetImage('assets/images/person.jpg'),
+                      child: Obx(
+                        () => CircleAvatar(
+                          radius: 15,
+                          backgroundImage: (socketController
+                                          .activeChatFriendAvatarUrl.value ==
+                                      null ||
+                                  socketController
+                                          .activeChatFriendAvatarUrl.value ==
+                                      '')
+                              ? const AssetImage('assets/images/person.jpg')
+                              : NetworkImage(urlAvatarImages +
+                                  socketController
+                                      .activeChatFriendAvatarUrl.value),
+                        ),
                       ),
                     ),
                     const SizedBox(

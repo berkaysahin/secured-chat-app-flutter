@@ -25,24 +25,26 @@ class Body extends StatelessWidget {
     messageBoxController.getMessageBoxList();
 
     return Scaffold(
-        backgroundColor: Colors.white,
-        body: Obx(
-          () => ListView.builder(
-            itemCount: messageBoxController.messageBoxList.length,
-            itemBuilder: (BuildContext context, int index) {
-              return MessageBoxCard(
-                friendId: messageBoxController.messageBoxList[index].friendId,
-                message: messageBoxController.messageBoxList[index].message,
-                nickname: messageBoxController.messageBoxList[index].nickname,
-                read: (messageBoxController
-                            .messageBoxList[index].lastSenderUserId ==
-                        id
-                    ? true
-                    : messageBoxController.messageBoxList[index].read),
-                sendDate: messageBoxController.messageBoxList[index].sendDate,
-              );
-            },
-          ),
-        ));
+      backgroundColor: Colors.white,
+      body: Obx(
+        () => ListView.builder(
+          itemCount: messageBoxController.messageBoxList.length,
+          itemBuilder: (BuildContext context, int index) {
+            return MessageBoxCard(
+              friendId: messageBoxController.messageBoxList[index].friendId,
+              message: messageBoxController.messageBoxList[index].message,
+              nickname: messageBoxController.messageBoxList[index].nickname,
+              read: (messageBoxController
+                          .messageBoxList[index].lastSenderUserId ==
+                      id
+                  ? true
+                  : messageBoxController.messageBoxList[index].read),
+              sendDate: messageBoxController.messageBoxList[index].sendDate,
+              avatarUrl: messageBoxController.messageBoxList[index].avatarUrl,
+            );
+          },
+        ),
+      ),
+    );
   }
 }
