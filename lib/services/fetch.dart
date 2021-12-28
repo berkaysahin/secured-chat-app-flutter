@@ -192,4 +192,19 @@ class Fetch {
 
     return response;
   }
+
+  getDHParameters(String toId) async {
+    Map body = {
+      "SenderUserId": getId(),
+      "ToUserId": toId,
+    };
+    var jsonBody = const JsonEncoder().convert(body);
+    var response = await RestConnector(
+      urlGetDHParameters,
+      getJwtToken(),
+      requestType: "POST",
+      data: jsonBody,
+    ).getData();
+    return response;
+  }
 }

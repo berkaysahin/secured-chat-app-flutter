@@ -31,17 +31,43 @@ class MessageBoxCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (_) => ChatScreen(
-            nickname: nickname,
-            friendId: friendId,
-            isOnline: isOnline,
-            avatarUrl: avatarUrl,
+      onTap: () async {
+        var result = await messageBoxController.getDHParameters(friendId);
+        var p = BigInt.parse(result[0].toString());
+        var g = BigInt.parse(result[1].toString());
+
+        var myKey = BigInt.parse(
+            "5E8B02F2B2E9C96E0C359ECD14EB1B29EBDD61E70A61E42F0836A5974963E96D91F1462B699C222BC92BC068E9DCE5C78E4349D28DDCB6D0ED2C41F7CD8AF2418C8AE27B6909484DED7F0C5B4C286D9C36518FA5953974741B3A6F757B59A41A5CA0B74EFD919BB7ED8CCEC9CB3BC4B4F8D15D16DC4642E54691904B2F35B969",
+            radix: 16);
+
+        // var yourKey = BigInt.parse(
+        //     "42111D3A7ECAA6A83E503825F38629AD9754D93370D681AEFEE152329D8DAE6C20732C5A7B6393DEDDB62753CEEFAE0A5E1BD037A5A32364CE1375442E58997C2918563EE5D7452373847AABAD5A5D02DF289B3A0B9096A375AE509F16363B4573A5CCCDFFF2B60459D52C0E5280853000CE6268560A95111723AF5916CC8376",
+        //     radix: 16);
+
+        var myKeyA = g.modPow(myKey, p);
+        // var yourKeyB = g.modPow(yourKey, p);
+
+        print(myKeyA);
+        print(yourKeyB);
+
+        var AdaSifre = yourKeyB.modPow(myKey, p);
+        var BdeSifre = myKeyA.modPow(yourKey, p);
+
+        print(AdaSifre);
+        print(BdeSifre);
+
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (_) => ChatScreen(
+              nickname: nickname,
+              friendId: friendId,
+              isOnline: isOnline,
+              avatarUrl: avatarUrl,
+            ),
           ),
-        ),
-      ),
+        );
+      },
       child: Container(
         padding: const EdgeInsets.symmetric(
           horizontal: 20,

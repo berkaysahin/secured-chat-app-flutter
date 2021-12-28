@@ -25,4 +25,17 @@ class MessageBoxController extends GetxController {
       );
     }
   }
+
+  getDHParameters(String toId) async {
+    var result = await f.getDHParameters(toId);
+    if (result["success"]) {
+      return result["data"];
+    } else {
+      Get.snackbar(
+        "Hata",
+        result["error"],
+        barBlur: 100,
+      );
+    }
+  }
 }

@@ -119,6 +119,7 @@ class SocketController extends GetxController {
       id,
       jwtToken,
     ];
+
     hubConnection.invoke("Connection", args: values);
   }
 
