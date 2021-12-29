@@ -8,12 +8,14 @@ class ChatScreen extends StatelessWidget {
   final String friendId;
   final bool isOnline;
   final String avatarUrl;
+  final String crypto;
   ChatScreen({
     Key key,
     this.nickname,
     this.isOnline,
     this.friendId,
     this.avatarUrl,
+    this.crypto
   }) : super(key: key);
 
   @override
@@ -23,6 +25,7 @@ class ChatScreen extends StatelessWidget {
       friendId: friendId,
       isOnline: isOnline,
       avatarUrl: avatarUrl,
+      crypto : crypto
     );
   }
 }

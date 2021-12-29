@@ -8,12 +8,15 @@ import 'package:secured_chat_app/models/message_model.dart';
 import 'package:secured_chat_app/screens/profile/profile_controller.dart';
 import 'package:secured_chat_app/services/socket_controller.dart';
 import 'package:secured_chat_app/services/urls.dart';
+import 'package:encrypt/encrypt.dart' as encrypt;
 
 class ChatBubble extends StatelessWidget {
   final Message message;
   final bool isMe;
   final bool isSameUser;
   final String avatarUrl;
+  final encrypt.Encrypter encrypter;
+  final encrypt.IV iv;
 
   ChatBubble({
     Key key,
@@ -21,6 +24,8 @@ class ChatBubble extends StatelessWidget {
     @required this.isMe,
     @required this.isSameUser,
     @required this.avatarUrl,
+    @required this.encrypter,
+    @required this.iv
   }) : super(key: key);
 
   ProfileController profileController = Get.find();
@@ -28,6 +33,8 @@ class ChatBubble extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    
+
     if (isMe) {
       return Column(
         children: <Widget>[
@@ -51,7 +58,7 @@ class ChatBubble extends StatelessWidget {
                 ],
               ),
               child: Text(
-                message.message,
+                encrypter.decrypt(encrypt.Encrypted.fromBase64(message.message), iv: iv),
                 style: const TextStyle(
                   color: Colors.white,
                 ),
@@ -129,7 +136,7 @@ class ChatBubble extends StatelessWidget {
                 ],
               ),
               child: Text(
-                message.message,
+                encrypter.decrypt(encrypt.Encrypted.fromBase64(message.message), iv: iv),
                 style: const TextStyle(
                   color: Colors.black54,
                 ),

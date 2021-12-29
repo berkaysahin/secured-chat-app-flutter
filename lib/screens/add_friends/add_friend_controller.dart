@@ -14,7 +14,7 @@ class AddFriendController extends GetxController {
 
   Fetch f = Fetch();
 
-  addFriend() async {
+  Future<String> addFriend() async {
     addFriendLoading.value = true;
     var result = await f.addFriend(emailController.text);
     if (result["success"]) {
@@ -23,14 +23,17 @@ class AddFriendController extends GetxController {
         'Arkadaş isteği gönderildi.',
         barBlur: 100,
       );
-    } else {
-      Get.snackbar(
-        "Hata",
-        result["error"],
-        barBlur: 100,
-      );
-    }
+      addFriendLoading.value = false;
+      return result["data"]["friendId"];
+    } 
+
+    Get.snackbar(
+      "Hata",
+      result["error"],
+      barBlur: 100,
+    );
     addFriendLoading.value = false;
+    return null;
   }
 
   getFriendRequests() async {
@@ -106,6 +109,32 @@ class AddFriendController extends GetxController {
         barBlur: 100,
       );
       return false;
+    }
+  }
+
+  getDHParameters(String toId) async {
+    var result = await f.getDHParameters(toId);
+    if (result["success"]) {
+      return result["data"];
+    } else {
+      Get.snackbar(
+        "Hata",
+        result["error"],
+        barBlur: 100,
+      );
+    }
+  }
+
+  setPublicKey(String publicKey, String toId) async {
+    var result = await f.setPublicKey(publicKey, toId);
+    if (result["success"]) {
+      return result["data"];
+    } else {
+      Get.snackbar(
+        "Hata",
+        result["error"],
+        barBlur: 100,
+      );
     }
   }
 }

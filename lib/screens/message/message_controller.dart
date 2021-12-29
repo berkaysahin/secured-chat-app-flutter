@@ -14,7 +14,7 @@ class MessageController extends GetxController {
 
   getMessages(String friendId) async {
     messageList.clear();
-
+  
     var result = await f.getMessages(friendId);
     if (result["success"]) {
       messageList.value = (result["data"]["response"] as List)

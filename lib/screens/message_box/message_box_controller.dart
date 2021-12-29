@@ -26,10 +26,10 @@ class MessageBoxController extends GetxController {
     }
   }
 
-  getDHParameters(String toId) async {
-    var result = await f.getDHParameters(toId);
+  getPublicKey(String toId) async {
+    var result = await f.getPublicKey(toId);
     if (result["success"]) {
-      return result["data"];
+      return result["data"]["publicKey"];
     } else {
       Get.snackbar(
         "Hata",

@@ -207,4 +207,35 @@ class Fetch {
     ).getData();
     return response;
   }
+
+  getPublicKey(String toId) async {
+    Map body = {
+      "MyId": getId(),
+      "FriendId": toId,
+    };
+    var jsonBody = const JsonEncoder().convert(body);
+    var response = await RestConnector(
+      urlGetPublicKey,
+      getJwtToken(),
+      requestType: "POST",
+      data: jsonBody,
+    ).getData();
+    return response;
+  }
+
+  setPublicKey(String publicKey, String toId) async {
+    Map body = {
+      "SenderUserId": getId(),
+      "ToUserId": toId,
+      "PublicKey" : publicKey
+    };
+    var jsonBody = const JsonEncoder().convert(body);
+    var response = await RestConnector(
+      urlSetPublicKey,
+      getJwtToken(),
+      requestType: "POST",
+      data: jsonBody,
+    ).getData();
+    return response;
+  }
 }

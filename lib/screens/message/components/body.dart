@@ -11,12 +11,14 @@ import 'package:secured_chat_app/screens/message/components/chat_bubble.dart';
 import 'package:secured_chat_app/screens/message/message_controller.dart';
 import 'package:secured_chat_app/screens/message_box/message_box_controller.dart';
 import 'package:secured_chat_app/services/socket_controller.dart';
+import 'package:encrypt/encrypt.dart' as encrypt;
 
 class Body extends StatelessWidget {
   final String nickname;
   final String friendId;
   final bool isOnline;
   final String avatarUrl;
+  final String crypto;
 
   Body({
     Key key,
@@ -24,6 +26,7 @@ class Body extends StatelessWidget {
     this.isOnline,
     this.friendId,
     this.avatarUrl,
+    this.crypto
   }) : super(key: key);
 
   MessageController messageController = Get.find();
@@ -38,6 +41,10 @@ class Body extends StatelessWidget {
     messageController.getMessages(friendId);
     String prevUserId;
     socketController.activeChatFriendAvatarUrl.value = avatarUrl;
+
+    final key = encrypt.Key.fromUtf8(crypto.substring(0,32));
+    final iv = encrypt.IV.fromLength(16);
+    final encrypter = encrypt.Encrypter(encrypt.AES(key, mode: encrypt.AESMode.ecb));
 
     _sendMessageArea() {
       return Container(
@@ -68,13 +75,15 @@ class Body extends StatelessWidget {
                   return;
                 }
 
+                final encrypted = encrypter.encrypt(messageController.messageTextController.text, iv: iv);
+
                 await socketController.sendMessage(
-                    friendId, messageController.messageTextController.text);
+                    friendId, encrypted.base64.toString());
 
                 Message message = Message(
                   sender: GetStorage().read('id').toString(),
                   to: friendId,
-                  message: messageController.messageTextController.text,
+                  message: encrypted.base64.toString(),
                   read: true,
                   sendDate: DateTime.now().toString(),
                 );
@@ -147,7 +156,9 @@ class Body extends StatelessWidget {
                     message: message,
                     isMe: isMe,
                     isSameUser: isSameUser,
-                    avatarUrl: avatarUrl);
+                    avatarUrl: avatarUrl,
+                    encrypter: encrypter,
+                    iv: iv);
               },
             ),
           )),

@@ -17,3 +17,5 @@ String urlGetProfile = domain + "/api/v1/user/profile";
 String urlChangeProfileImage = domain + "/api/v1/user/ChangeProfileImage";
 String urlAvatarImages = domain + "/Contents/Images/Avatar/";
 String urlGetDHParameters = domain + "/api/v1/message/GetDHParameters";
+String urlSetPublicKey = domain + "/api/v1/message/SetPublicKey";
+String urlGetPublicKey = domain + "/api/v1/message/GetPublicKey";
