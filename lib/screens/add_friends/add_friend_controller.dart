@@ -1,4 +1,4 @@
-// ignore_for_file: file_names
+// ignore_for_file: file_names, prefer_if_null_operators
 
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
@@ -17,7 +17,7 @@ class AddFriendController extends GetxController {
   Future<String> addFriend() async {
     addFriendLoading.value = true;
     var result = await f.addFriend(emailController.text);
-    if (result["success"]) {
+    if (result["success"] != null && result["success"]) {
       Get.snackbar(
         "Başarılı!",
         'Arkadaş isteği gönderildi.',
@@ -25,13 +25,14 @@ class AddFriendController extends GetxController {
       );
       addFriendLoading.value = false;
       return result["data"]["friendId"];
-    } 
+    }
 
     Get.snackbar(
-      "Hata",
-      result["error"],
-      barBlur: 100,
-    );
+        "Hata",
+        result["error"] == null
+            ? "Beklenmedik bir hata oluştu!"
+            : result["error"],
+        barBlur: 100);
     addFriendLoading.value = false;
     return null;
   }

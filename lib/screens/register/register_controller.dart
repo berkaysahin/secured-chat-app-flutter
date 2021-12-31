@@ -1,4 +1,4 @@
-// ignore_for_file: file_names
+// ignore_for_file: file_names, prefer_if_null_operators
 
 import 'dart:io';
 
@@ -18,13 +18,19 @@ class RegisterController extends GetxController {
     registerLoading.value = true;
     var result = await f.register(
         nicknameController.text, emailController.text, passwordController.text);
-    if (result["success"]) {
+    if (result["success"] != null && result["success"]) {
       Get.snackbar("Başarılı", "Giriş yapınız.");
       sleep(const Duration(seconds: 2));
+      registerLoading.value = false;
       Get.to(() => LoginScreen());
     } else {
-      Get.snackbar("Hata", result["error"]);
+      Get.snackbar(
+          "Hata",
+          result["error"] == null
+              ? "Beklenmedik bir hata oluştu!"
+              : result["error"],
+          barBlur: 100);
+      registerLoading.value = false;
     }
-    registerLoading.value = false;
   }
 }

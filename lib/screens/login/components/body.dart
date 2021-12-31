@@ -60,8 +60,16 @@ class Body extends StatelessWidget {
                     ? "Giriş Yapılıyor"
                     : "Giriş Yap",
                 press: () async {
-                  await loginController.login();
-                  socketController.initSignalR();
+                  if (loginController.emailController.text == "" ||
+                      loginController.passwordController.text == "") {
+                    Get.snackbar("Hata", "E-Mail ve şifre boş bırakılamaz.",
+                        barBlur: 100);
+                    return;
+                  }
+                  bool result = await loginController.login();
+                  if (result) {
+                    socketController.initSignalR();
+                  }
                 },
               ),
             ),

@@ -55,6 +55,15 @@ class Body extends StatelessWidget {
                     ? "Kayıt Yapılıyor"
                     : "Kayıt Ol",
                 press: () {
+                  if (registerController.nicknameController.text == "" ||
+                      registerController.emailController.text == "" ||
+                      registerController.passwordController.text == "") {
+                    Get.snackbar("Hata",
+                        "Kullanıcı adı, E-Mail ve şifre boş bırakılamaz.",
+                        barBlur: 100);
+                    return;
+                  }
+
                   registerController.register();
                 },
               ),

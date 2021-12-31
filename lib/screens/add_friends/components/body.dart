@@ -20,7 +20,7 @@ class Body extends StatelessWidget {
   AddFriendController addFriendController = Get.find();
   SocketController socketController = Get.find();
   final DbHelper _dbHelper = DbHelper();
-  
+
   @override
   Widget build(BuildContext context) {
     socketController.activeScreen.value = ScreenEnum.Others;
@@ -55,20 +55,37 @@ class Body extends StatelessWidget {
                                 ? "Arkadaş isteği gönderiliyor.."
                                 : "Gönder",
                             press: () async {
-                              var friendId = await addFriendController.addFriend();
-                              var dhParameterResult = await addFriendController.getDHParameters(friendId.toString());
-                              
-                              var numberP = BigInt.parse(dhParameterResult["numberP"].toString());
-                              var numberG = BigInt.parse(dhParameterResult["numberG"].toString());
-                              
-                              var currentUserMailAdress = GetStorage().read('email').toString();
-                              var user  = await _dbHelper.getUser(currentUserMailAdress);
-                              BigInt myPrivateKey = BigInt.parse(user.secureKey, radix: 16);
-                                  
-                              var myPublicKey = numberG.modPow(myPrivateKey, numberP);
-                              await addFriendController.setPublicKey(myPublicKey.toString(), friendId);
+                              if (addFriendController.emailController.text ==
+                                  "") {
+                                Get.snackbar("Hata", "E-Mail boş bırakılamaz.",
+                                    barBlur: 100);
+                                return;
+                              }
 
-                              // Navigator.pop(context);
+                              var friendId =
+                                  await addFriendController.addFriend();
+                              if (friendId == null) {
+                                return;
+                              }
+                              var dhParameterResult = await addFriendController
+                                  .getDHParameters(friendId.toString());
+
+                              var numberP = BigInt.parse(
+                                  dhParameterResult["numberP"].toString());
+                              var numberG = BigInt.parse(
+                                  dhParameterResult["numberG"].toString());
+
+                              var currentUserMailAdress =
+                                  GetStorage().read('email').toString();
+                              var user = await _dbHelper
+                                  .getUser(currentUserMailAdress);
+                              BigInt myPrivateKey =
+                                  BigInt.parse(user.secureKey, radix: 16);
+
+                              var myPublicKey =
+                                  numberG.modPow(myPrivateKey, numberP);
+                              await addFriendController.setPublicKey(
+                                  myPublicKey.toString(), friendId);
                             },
                           ),
                         ),
