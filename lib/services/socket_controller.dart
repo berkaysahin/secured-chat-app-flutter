@@ -21,7 +21,6 @@ class SocketController extends GetxController {
   MessageController messageController = Get.put(MessageController());
   MessageBoxController messageBoxController = Get.put(MessageBoxController());
 
-  String id = GetStorage().read('id');
   String jwtToken = GetStorage().read('jwtToken');
 
   void initSignalR() async {
@@ -75,9 +74,7 @@ class SocketController extends GetxController {
   }
 
   void _handleNewMessage(List<Object> arguments) {
-    // arguments[0] senderId
-    // arguments[1] message
-    // arguments[2] sendDate
+    String id = GetStorage().read('id');
 
     Message message = Message(
       sender: arguments[0].toString(),
@@ -114,6 +111,7 @@ class SocketController extends GetxController {
   }
 
   login() async {
+    String id = GetStorage().read('id');
     List<Object> values = [
       id,
       jwtToken,
@@ -123,6 +121,7 @@ class SocketController extends GetxController {
   }
 
   sendMessage(String friendId, String message) async {
+    String id = GetStorage().read('id');
     List<Object> values = [
       id,
       friendId,
@@ -135,6 +134,7 @@ class SocketController extends GetxController {
   }
 
   switchToReadMessages(String friendId) async {
+    String id = GetStorage().read('id');
     List<Object> values = [
       id,
       friendId,
@@ -144,6 +144,7 @@ class SocketController extends GetxController {
   }
 
   profileImageChanged() async {
+    String id = GetStorage().read('id');
     List<Object> values = [
       id,
       jwtToken,

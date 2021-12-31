@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:secured_chat_app/components/rounded_button.dart';
 import 'package:secured_chat_app/components/rounded_input_field.dart';
+import 'package:secured_chat_app/database/db_helper.dart';
 import 'package:secured_chat_app/models/screen_enum.dart';
 import 'package:secured_chat_app/screens/add_friends/add_friend_controller.dart';
 import 'package:secured_chat_app/screens/add_friends/components/friend_card.dart';
@@ -18,7 +19,8 @@ class Body extends StatelessWidget {
 
   AddFriendController addFriendController = Get.find();
   SocketController socketController = Get.find();
-
+  final DbHelper _dbHelper = DbHelper();
+  
   @override
   Widget build(BuildContext context) {
     socketController.activeScreen.value = ScreenEnum.Others;
@@ -54,20 +56,17 @@ class Body extends StatelessWidget {
                                 : "Gönder",
                             press: () async {
                               var friendId = await addFriendController.addFriend();
-                              var result = await addFriendController.getDHParameters(friendId.toString());
+                              var dhParameterResult = await addFriendController.getDHParameters(friendId.toString());
                               
-                              var numberP = BigInt.parse(result["numberP"].toString());
-                              var numberG = BigInt.parse(result["numberG"].toString());
-
-                              // burasi kalici olmasi gerekiyor
-                              GetStorage().write("numberP", numberP);
-
-                              var myKey = BigInt.parse(
-                                  "5E8B02F2B2E9C96E0C359ECD14EB1B29EBDD61E70A61E42F0836A5974963E96D91F1462B699C222BC92BC068E9DCE5C78E4349D28DDCB6D0ED2C41F7CD8AF2418C8AE27B6909484DED7F0C5B4C286D9C36518FA5953974741B3A6F757B59A41A5CA0B74EFD919BB7ED8CCEC9CB3BC4B4F8D15D16DC4642E54691904B2F35B969",
-                                  radix: 16);
+                              var numberP = BigInt.parse(dhParameterResult["numberP"].toString());
+                              var numberG = BigInt.parse(dhParameterResult["numberG"].toString());
+                              
+                              var currentUserMailAdress = GetStorage().read('email').toString();
+                              var user  = await _dbHelper.getUser(currentUserMailAdress);
+                              BigInt myPrivateKey = BigInt.parse(user.secureKey, radix: 16);
                                   
-                              var myPublicKey = numberG.modPow(myKey, numberP);
-                              result = await addFriendController.setPublicKey(myPublicKey.toString(), friendId);
+                              var myPublicKey = numberG.modPow(myPrivateKey, numberP);
+                              await addFriendController.setPublicKey(myPublicKey.toString(), friendId);
 
                               // Navigator.pop(context);
                             },

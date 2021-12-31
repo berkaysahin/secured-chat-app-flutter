@@ -46,6 +46,8 @@ dependencies:
   dio: ^4.0.4
   image_picker: ^0.8.4+4
   encrypt: ^5.0.1
+  sqflite: ^2.0.1
+  path: ^1.8.0
 
 dev_dependencies:
   flutter_test:

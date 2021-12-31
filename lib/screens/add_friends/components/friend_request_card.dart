@@ -2,6 +2,8 @@
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
+import 'package:secured_chat_app/database/db_helper.dart';
 import 'package:secured_chat_app/screens/add_friends/add_friend_controller.dart';
 
 class FriendRequestCard extends StatelessWidget {
@@ -19,6 +21,7 @@ class FriendRequestCard extends StatelessWidget {
   }) : super(key: key);
 
   AddFriendController addFriendController = Get.find();
+  final DbHelper _dbHelper = DbHelper();
 
   @override
   Widget build(BuildContext context) {
@@ -36,22 +39,22 @@ class FriendRequestCard extends StatelessWidget {
                     if (result) {
                       addFriendController.getFriendRequestList.removeAt(index);
                       addFriendController.getFriendsList();
-                      Get.snackbar(
-                        "Başarılı!",
-                        'Arkadaş isteği kabul edildi.',
-                        barBlur: 100,
-                      );
-
-                      var yourKey = BigInt.parse(
-                        "42111D3A7ECAA6A83E503825F38629AD9754D93370D681AEFEE152329D8DAE6C20732C5A7B6393DEDDB62753CEEFAE0A5E1BD037A5A32364CE1375442E58997C2918563EE5D7452373847AABAD5A5D02DF289B3A0B9096A375AE509F16363B4573A5CCCDFFF2B60459D52C0E5280853000CE6268560A95111723AF5916CC8376",
-                        radix: 16);
+                      var currentUserMailAdress = GetStorage().read('email').toString();
+                      var user = await _dbHelper.getUser(currentUserMailAdress);
+                      BigInt myPrivateKey = BigInt.parse(user.secureKey, radix: 16);
 
                       var result = await addFriendController.getDHParameters(senderUserId);
                       var numberP = BigInt.parse(result["numberP"].toString());
                       var numberG = BigInt.parse(result["numberG"].toString());
 
-                      var myPublicKey = numberG.modPow(yourKey, numberP);
+                      var myPublicKey = numberG.modPow(myPrivateKey, numberP);
                       result = await addFriendController.setPublicKey(myPublicKey.toString(), senderUserId);
+                      
+                      Get.snackbar(
+                        "Başarılı!",
+                        'Arkadaş isteği kabul edildi.',
+                        barBlur: 100,
+                      );
                     }
                   },
                   icon: const Icon(Icons.check)),
