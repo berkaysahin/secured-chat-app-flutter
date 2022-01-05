@@ -32,32 +32,32 @@ class MessageBoxCard extends StatelessWidget {
   MessageBoxController messageBoxController = Get.find();
   AddFriendController addFriendController = Get.find();
   final DbHelper _dbHelper = DbHelper();
-  
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () async {
-
-        var myFriendPublicKey = BigInt.parse((await messageBoxController.getPublicKey(friendId)).toString());
+        var myFriendPublicKey = BigInt.parse(
+            (await messageBoxController.getPublicKey(friendId)).toString());
 
         var currentUserMailAdress = GetStorage().read('email').toString();
         var user = await _dbHelper.getUser(currentUserMailAdress);
         BigInt myPrivateKey = BigInt.parse(user.secureKey, radix: 16);
 
-        var dhParameterResult = await addFriendController.getDHParameters(friendId.toString());
+        var dhParameterResult =
+            await addFriendController.getDHParameters(friendId.toString());
         var numberP = BigInt.parse(dhParameterResult["numberP"].toString());
         var crypto = myFriendPublicKey.modPow(myPrivateKey, numberP);
-      
+
         Navigator.push(
           context,
           MaterialPageRoute(
             builder: (_) => ChatScreen(
-              nickname: nickname,
-              friendId: friendId,
-              isOnline: isOnline,
-              avatarUrl: avatarUrl,
-              crypto : crypto.toString()
-            ),
+                nickname: nickname,
+                friendId: friendId,
+                isOnline: isOnline,
+                avatarUrl: avatarUrl,
+                crypto: crypto.toString()),
           ),
         );
       },
@@ -153,18 +153,6 @@ class MessageBoxCard extends StatelessWidget {
                   ),
                   const SizedBox(
                     height: 10,
-                  ),
-                  Container(
-                    alignment: Alignment.topLeft,
-                    child: Text(
-                      message,
-                      style: const TextStyle(
-                        fontSize: 13,
-                        color: Colors.black54,
-                      ),
-                      overflow: TextOverflow.ellipsis,
-                      maxLines: 2,
-                    ),
                   ),
                 ],
               ),
