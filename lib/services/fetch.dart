@@ -2,6 +2,7 @@
 
 import 'dart:convert';
 import 'dart:io';
+import 'package:crypto/crypto.dart';
 import 'package:dio/dio.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:secured_chat_app/services/rest_connector.dart';
@@ -20,7 +21,7 @@ class Fetch {
   login(String email, String password) async {
     Map body = {
       "email": email,
-      "password": password,
+      "password": sha256.convert(utf8.encode(password)).toString(),
     };
     var jsonBody = const JsonEncoder().convert(body);
     var response = await RestConnector(
@@ -36,7 +37,7 @@ class Fetch {
     Map body = {
       "nickname": nickname,
       "email": email,
-      "password": password,
+      "password": sha256.convert(utf8.encode(password)).toString(),
     };
     var jsonBody = const JsonEncoder().convert(body);
     var response = await RestConnector(
